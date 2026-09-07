@@ -41,9 +41,21 @@ fi
 printf '<?php\n$cfg["blowfish_secret"] = %s;\n' "'${PMA_BLOWFISH_SECRET//\'/}'" \
     > /etc/phpmyadmin/config.secret.inc.php
 chgrp www-data /etc/phpmyadmin/config.secret.inc.php
-log "blowfish secret pinned from the environment (sessions survive a redeploy)"
+log "blowfish secret pinned from the environment (login cookies stay valid across deploys)"
 
-# 4. Create the phpMyAdmin configuration storage and its control user.
+# 4. Keep PHP sessions on the volume, and make it writable.
+#
+# PHP writes its session files to /sessions, which is on the disposable layer in
+# the stock image, so every deploy signs every user out mid-task. Railway mounts
+# a volume owned by uid 0 while Apache's children run as www-data, so the mount
+# has to be repaired before anything writes to it.
+if [ -d /sessions ]; then
+    chown www-data:www-data /sessions
+    chmod 1777 /sessions
+    log "session store ready ($(ls -1 /sessions | wc -l) session(s) carried over)"
+fi
+
+# 5. Create the phpMyAdmin configuration storage and its control user.
 #
 # Without it phpMyAdmin shows a permanent "not completely configured" banner and
 # bookmarks, column comments, query history, favourites and designer layouts are
