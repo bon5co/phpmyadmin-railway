@@ -1,5 +1,9 @@
 # phpmyadmin-railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/phpmyadmin-mysql-or-just-updated-fixes-t?referralCode=Z1xivh&utm_medium=integration&utm_source=template&utm_campaign=generic)
+
+**Deploy on Railway:** [phpMyAdmin + MySQL template](https://railway.com/deploy/phpmyadmin-mysql-or-just-updated-fixes-t?referralCode=Z1xivh&utm_medium=integration&utm_source=template&utm_campaign=generic)
+
 Wrapper image for running the official [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin)
 Apache image on [Railway](https://railway.com). Published as
 `ghcr.io/bon5co/phpmyadmin-railway:5.2.3`.
